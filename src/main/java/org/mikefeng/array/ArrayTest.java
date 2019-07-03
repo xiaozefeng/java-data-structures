@@ -2,7 +2,7 @@ package org.mikefeng.array;
 
 public class ArrayTest {
     public static void main(String[] args) {
-        Array arr= new Array(100);
+        Array<Integer> arr= new Array<>(100);
         for (int i = 0; i < 10; i++) {
             arr.addLast(i);
         }

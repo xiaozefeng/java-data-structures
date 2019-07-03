@@ -3,13 +3,13 @@ package org.mikefeng.array;
 /**
  * 自己封装Array
  */
-public class Array {
+public class Array<E> {
 
-    private int[] data;
+    private E[] data;
     private int size;
 
     public Array(int capacity) {
-        this.data = new int[capacity];
+        this.data = (E[]) new Object[capacity];
         this.size = 0;
     }
 
@@ -26,12 +26,12 @@ public class Array {
     }
 
     // 尾部添加元素
-    public void addLast(int e) {
+    public void addLast(E e) {
         add(size, e);
     }
 
     // 指定位置添加元素
-    public void add(int index, int e) {
+    public void add(int index, E e) {
         if (size == data.length)
             throw new IllegalArgumentException("Add failed. Array is full.");
 
@@ -47,7 +47,7 @@ public class Array {
     }
 
     // get
-    public int get(int index) {
+    public E get(int index) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Get failed, index is illegal.");
 
@@ -55,16 +55,16 @@ public class Array {
     }
 
     // set
-    public void set(int index, int e) {
+    public void set(int index, E e) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Get failed, index is illegal.");
         data[index] = e;
     }
 
     // contains
-    public boolean contains(int e) {
+    public boolean contains(E e) {
         for (int i = 0; i < size; i++) {
-            if (e == data[i]) {
+            if (e.equals(data[i])) {
                 return true;
             }
         }
@@ -72,9 +72,9 @@ public class Array {
     }
 
     // find
-    public int find(int e) {
+    public int find(E e) {
         for (int i = 0; i < size; i++) {
-            if (e == data[i]) {
+            if (e.equals(data[i])) {
                 return i;
             }
         }
@@ -82,11 +82,11 @@ public class Array {
     }
 
     // remove
-    public int remove(int index) {
+    public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Remove failed. required index >=0 and index <size");
         }
-        int ret = data[index];
+        E ret = data[index];
         for (int i = index + 1; i < size; i++)
             data[i - 1] = data[i];
         size--;
@@ -94,16 +94,16 @@ public class Array {
     }
 
 
-    public int removeFirst() {
+    public E removeFirst() {
         return remove(0);
     }
 
-    public int removeLast() {
+    public E removeLast() {
         return remove(size - 1);
     }
 
     // remove element
-    public void removeElement(int e) {
+    public void removeElement(E e) {
         int index = find(e);
         if (index !=-1)
             remove(index);
