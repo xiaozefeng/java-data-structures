@@ -81,6 +81,34 @@ public class Array {
         return -1;
     }
 
+    // remove
+    public int remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException("Remove failed. required index >=0 and index <size");
+        }
+        int ret = data[index];
+        for (int i = index + 1; i < size; i++)
+            data[i - 1] = data[i];
+        size--;
+        return ret;
+    }
+
+
+    public int removeFirst() {
+        return remove(0);
+    }
+
+    public int removeLast() {
+        return remove(size - 1);
+    }
+
+    // remove element
+    public void removeElement(int e) {
+        int index = find(e);
+        if (index !=-1)
+            remove(index);
+    }
+
 
     @Override
     public String toString() {
@@ -88,7 +116,7 @@ public class Array {
         res.append(String.format("Array: size=%d, capacity=%d\n", size, data.length));
         res.append("[");
         for (int i = 0; i < size; i++) {
-            res.append(i).append(",");
+            res.append(data[i]).append(",");
         }
         res.deleteCharAt(res.length() - 1);
         res.append("]");
