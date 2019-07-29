@@ -32,11 +32,11 @@ public class Array<E> {
 
     // 指定位置添加元素
     public void add(int index, E e) {
-        if (size == data.length)
-            throw new IllegalArgumentException("Add failed. Array is full.");
-
         if (index < 0 || index > size)
             throw new IllegalArgumentException("Add failed. Required index >=0 and index <=size.");
+
+        if (size == data.length)
+            resize(2 * data.length);
 
         // 将index后的元素后移一位
         for (int i = size - 1; i >= index; i--)
@@ -45,6 +45,7 @@ public class Array<E> {
         data[index] = e;
         size++;
     }
+
 
     // get
     public E get(int index) {
@@ -90,6 +91,12 @@ public class Array<E> {
         for (int i = index + 1; i < size; i++)
             data[i - 1] = data[i];
         size--;
+
+        // 如果当前元素只有容量的4分之一时， 数据缩减到数组的一半
+        if (size == data.length / 4 && data.length / 2 != 0) {
+            // 不能创建一个长度为0的数组
+            resize(data.length / 2);
+        }
         return ret;
     }
 
@@ -105,7 +112,7 @@ public class Array<E> {
     // remove element
     public void removeElement(E e) {
         int index = find(e);
-        if (index !=-1)
+        if (index != -1)
             remove(index);
     }
 
@@ -121,6 +128,18 @@ public class Array<E> {
         res.deleteCharAt(res.length() - 1);
         res.append("]");
         return res.toString();
+    }
+
+    /**
+     * resize
+     *
+     * @param newCapacity
+     */
+    private void resize(int newCapacity) {
+        E[] newData = (E[]) new Object[newCapacity];
+        for (int i = 0; i < size; i++)
+            newData[i] = this.data[i];
+        this.data = newData;
     }
 }
 
