@@ -55,6 +55,14 @@ public class Array<E> {
         return data[index];
     }
 
+    public E getLast() {
+        return get(size - 1);
+    }
+
+    public E getFirst() {
+        return get(0);
+    }
+
     // set
     public void set(int index, E e) {
         if (index < 0 || index >= size)
@@ -140,6 +148,10 @@ public class Array<E> {
         for (int i = 0; i < size; i++)
             newData[i] = this.data[i];
         this.data = newData;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 }
 
