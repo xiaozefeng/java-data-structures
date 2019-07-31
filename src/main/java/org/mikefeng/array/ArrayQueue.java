@@ -38,7 +38,7 @@ public class ArrayQueue<E> implements Queue<E> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder res = new StringBuilder();
         res.append("Queue:");
         res.append("front [");
@@ -50,5 +50,17 @@ public class ArrayQueue<E> implements Queue<E> {
         }
         res.append("] tail");
         return res.toString();
+    }
+
+
+    public static void main(String[] args) {
+        Queue<Integer> queue = new ArrayQueue<>();
+        for (int i = 0; i < 10; i++) {
+            queue.enqueue(i);
+            System.out.println(queue);
+            if (i % 3 == 2) {
+                queue.dequeue();
+            }
+        }
     }
 }

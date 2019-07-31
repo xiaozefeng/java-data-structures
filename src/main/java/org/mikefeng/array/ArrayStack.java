@@ -37,11 +37,11 @@ public class ArrayStack<E> implements Stack<E> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder res = new StringBuilder();
         res.append("Stack: ");
         res.append('[');
-        for (int i = 0; i <array.getSize() ; i++) {
+        for (int i = 0; i < array.getSize(); i++) {
             res.append(array.get(i));
             if (i != array.getSize() - 1) {
                 res.append(',');
@@ -51,4 +51,18 @@ public class ArrayStack<E> implements Stack<E> {
         return res.toString();
     }
 
+    public static void main(String[] args) {
+        Stack<Integer> stack = new ArrayStack<>();
+
+        for (int i = 0; i < 5; i++) {
+            stack.push(i);
+            System.out.println(stack);
+        }
+
+        stack.pop();
+        System.out.println(stack);
+    }
+
 }
+
+
