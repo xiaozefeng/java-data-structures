@@ -43,9 +43,9 @@ public class LoopQueue<E> implements Queue<E> {
         if ((tail + 1) % data.length == front) {
             resize(getCapacity() * 2);
         }
-        this.data[this.tail] = e;
+        data[tail] = e;
         // tail 后移一位
-        tail = (tail + 1) / data.length;
+        tail = (tail + 1) % data.length;
         size++;
     }
 
@@ -59,12 +59,12 @@ public class LoopQueue<E> implements Queue<E> {
         E ret = data[front];
         data[front] = null;
         // front 后移一位
-        front = (front + 1) / data.length;
+        front = (front + 1) % data.length;
         size--;
 
         // 是否需缩容
         if (size == data.length / 4 && data.length / 2 != 0) {
-            resize(data.length / 2);
+            resize(getCapacity() / 2);
         }
         return ret;
 
@@ -78,14 +78,15 @@ public class LoopQueue<E> implements Queue<E> {
         return data[front % data.length];
     }
 
-    private void resize(int capacity) {
+    private void resize(int newCapacity) {
         // new data
-        E[] newData = (E[]) new Object[capacity + 1];
+        E[] newData = (E[]) new Object[newCapacity + 1];
         // reassignment
         for (int i = 0; i < size; i++) {
             newData[i] = data[(i + front) % data.length];
         }
         // 初始化 front tail
+        data = newData;
         front = 0;
         tail = size;
     }
@@ -93,11 +94,18 @@ public class LoopQueue<E> implements Queue<E> {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
+        res.append(String.format("Queue: size= %d, capacity= %d ", size, getCapacity()));
         res.append("front [");
-        for (int i = 0; i < size; i++) {
-            res.append(data[(i + front) % data.length]);
-            if (i == size - 1) {
-                res.append(",");
+        // for (int i = 0; i < size; i++) {
+        //     res.append(data[(i + front) % data.length]);
+        //     if ((i + 1) % data.length != tail) {
+        //         res.append(",");
+        //     }
+        // }
+        for (int i = front; i != tail; i = (i + 1) % data.length) {
+            res.append(data[i]);
+            if ((i + 1) % data.length != tail) {
+                res.append(", ");
             }
         }
         res.append("] tail");
@@ -111,6 +119,7 @@ public class LoopQueue<E> implements Queue<E> {
             System.out.println(queue);
             if (i % 3 == 2) {
                 queue.dequeue();
+                System.out.println(queue);
             }
         }
     }
